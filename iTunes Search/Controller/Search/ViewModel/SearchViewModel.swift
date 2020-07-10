@@ -9,7 +9,12 @@
 import Foundation
 
 final class SearchViewModel {
-    var searchType: SearchType = .movies
+    var searchType: SearchType = .movie {
+        didSet {
+            searchResult = SearchResult()
+        }
+    }
+    
     var searchResult = SearchResult()
     
     var numberOfSections: Int {
@@ -24,8 +29,8 @@ final class SearchViewModel {
         return SearchResultCellViewModel(term: searchResult.results[index])
     }
     
-    func search(withText text: String, andLimit limit: Int, completion: @escaping (Error?) -> Void) {
-        APIClient.search(withTerm: text, andLimit: limit).execute(onSuccess: { searchResult in
+    func search(withText text: String, andMedia media: String, andLimit limit: Int, completion: @escaping (Error?) -> Void) {
+        APIClient.search(withTerm: text, andMedia: media, andLimit: limit).execute(onSuccess: { searchResult in
             self.searchResult = searchResult
             completion(nil)
         }) { error in

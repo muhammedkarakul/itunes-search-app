@@ -17,6 +17,7 @@ struct NetworkConstants {
     
     struct APIParameterKey {
         static let term = "term"
+        static let media = "media"
         static let limit = "limit"
     }
 }

@@ -27,7 +27,7 @@ class APIClient {
         }
     }
     
-    static func search(withTerm term: String, andLimit limit: Int) -> Future<SearchResult, AFError> {
-        return performRequest(route: APIRouter.search(term: term, limit: limit))
+    static func search(withTerm term: String, andMedia media: String, andLimit limit: Int) -> Future<SearchResult, AFError> {
+        return performRequest(route: APIRouter.search(term: term, media: media, limit: limit))
     }
 }

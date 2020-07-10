@@ -9,21 +9,21 @@
 import UIKit
 
 final class SearchResultCell: UICollectionViewCell {
-    var collectionName: String? {
+    var name: String? {
         get {
-            collectionNameLabel.text
+            nameLabel.text
         }
         set {
-            collectionNameLabel.text = newValue
+            nameLabel.text = newValue
         }
     }
     
-    var collectionPrice: Float? {
+    var price: Float? {
         get {
-            Float(collectionPriceLabel.text ?? "")
+            Float(priceLabel.text ?? "")
         }
         set {
-            collectionPriceLabel.text = String(newValue ?? 0) + "$"
+            priceLabel.text = String(newValue ?? 0) + "$"
         }
     }
     
@@ -39,7 +39,7 @@ final class SearchResultCell: UICollectionViewCell {
     private lazy var relaseDateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        dateFormatter.dateFormat = "yyyy"
+        dateFormatter.dateFormat = "dd MMM yyyy"
         return dateFormatter
     }()
     
@@ -50,14 +50,14 @@ final class SearchResultCell: UICollectionViewCell {
         return imageView
     }()
     
-    private lazy var collectionNameLabel: UILabel = {
+    private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.text = "Collection Name"
         label.font = UIFont.systemFont(ofSize: 13.0)
         return label
     }()
     
-    private lazy var collectionPriceLabel: UILabel = {
+    private lazy var priceLabel: UILabel = {
         let label = UILabel()
         label.text = "0.00$"
         label.font = UIFont.systemFont(ofSize: 11.0)
@@ -83,8 +83,8 @@ final class SearchResultCell: UICollectionViewCell {
     
     private func prepareLayout() {
         setupArtworkImageViewLayout()
-        setupCollectionNameLabelLayout()
-        setupCollectionPriceLabelLayout()
+        setupNameLabelLayout()
+        setupPriceLabelLayout()
         setupRelaseDateLabelLayout()
     }
     
@@ -97,20 +97,20 @@ final class SearchResultCell: UICollectionViewCell {
         }
     }
     
-    private func setupCollectionNameLabelLayout() {
-        addSubview(collectionNameLabel)
-        collectionNameLabel.snp.makeConstraints { maker in
+    private func setupNameLabelLayout() {
+        addSubview(nameLabel)
+        nameLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview()
             maker.top.equalTo(artworkImageView.snp.bottom).offset(4.0)
             maker.trailing.equalToSuperview()
         }
     }
     
-    private func setupCollectionPriceLabelLayout() {
-        addSubview(collectionPriceLabel)
-        collectionPriceLabel.snp.makeConstraints { maker in
+    private func setupPriceLabelLayout() {
+        addSubview(priceLabel)
+        priceLabel.snp.makeConstraints { maker in
             maker.leading.equalToSuperview()
-            maker.top.equalTo(collectionNameLabel.snp.bottom).offset(4.0)
+            maker.top.equalTo(nameLabel.snp.bottom).offset(4.0)
             maker.bottom.equalToSuperview()
         }
     }
@@ -118,8 +118,8 @@ final class SearchResultCell: UICollectionViewCell {
     private func setupRelaseDateLabelLayout() {
         addSubview(relaseDateLabel)
         relaseDateLabel.snp.makeConstraints { maker in
-            maker.leading.equalTo(collectionPriceLabel.snp.trailing).offset(8.0)
-            maker.top.equalTo(collectionNameLabel.snp.bottom).offset(4.0)
+            maker.leading.equalTo(priceLabel.snp.trailing).offset(8.0)
+            maker.top.equalTo(nameLabel.snp.bottom).offset(4.0)
             maker.trailing.equalToSuperview()
             maker.bottom.equalToSuperview()
         }

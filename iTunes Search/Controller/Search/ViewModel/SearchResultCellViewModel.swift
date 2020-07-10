@@ -18,8 +18,8 @@ final class SearchResultCellViewModel {
     
     func configure(_ cell: SearchResultCell) {
         cell.artworkImageView.kf.setImage(with: term.artworkUrl100)
-        cell.collectionName = term.collectionName
-        cell.collectionPrice = term.collectionPrice
+        cell.name = term.trackName
+        cell.price = term.trackPrice
         cell.relaseDate = term.releaseDate
     }
 }

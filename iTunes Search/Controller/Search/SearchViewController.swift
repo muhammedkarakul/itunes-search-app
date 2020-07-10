@@ -153,13 +153,13 @@ extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         switch selectedScope {
         case 0:
-            searchViewModel.searchType = .movies
+            searchViewModel.searchType = .movie
         case 1:
             searchViewModel.searchType = .music
         case 2:
-            searchViewModel.searchType = .apps
+            searchViewModel.searchType = .software
         case 3:
-            searchViewModel.searchType = .books
+            searchViewModel.searchType = .ebook
         default:
             break
         }
@@ -172,14 +172,13 @@ extension SearchViewController: UISearchResultsUpdating {
         guard let searchText = searchController.searchBar.text else { return }
         if searchText.count > 2 {
             progressHud.show(in: self.view)
-            searchViewModel.search(withText: searchText, andLimit: 20) { error in
+            searchViewModel.search(withText: searchText, andMedia: searchViewModel.searchType.rawValue.lowercased(), andLimit: 20) { error in
                 self.progressHud.dismiss()
                 if let error = error {
                     debugPrint(error)
-                } else {
-                    self.resultCollectionView.backgroundView?.isHidden = self.searchViewModel.numberOfItems > 0
-                    self.resultCollectionView.reloadData()
                 }
+                self.resultCollectionView.backgroundView?.isHidden = self.searchViewModel.numberOfItems > 0
+                self.resultCollectionView.reloadData()
             }
         }
     }

@@ -9,6 +9,7 @@ target 'iTunes Search' do
 
   # Network 
   pod 'Alamofire'
+  pod 'Kingfisher'
 
   # Layout
   pod 'SnapKit'

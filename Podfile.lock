@@ -1,12 +1,16 @@
 PODS:
   - Alamofire (5.2.1)
   - JGProgressHUD (2.1)
+  - Kingfisher (5.14.1):
+    - Kingfisher/Core (= 5.14.1)
+  - Kingfisher/Core (5.14.1)
   - PromisedFuture (1.0.2)
   - SnapKit (5.0.1)
 
 DEPENDENCIES:
   - Alamofire
   - JGProgressHUD
+  - Kingfisher
   - PromisedFuture
   - SnapKit
 
@@ -14,15 +18,17 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - JGProgressHUD
+    - Kingfisher
     - PromisedFuture
     - SnapKit
 
 SPEC CHECKSUMS:
   Alamofire: e911732990610fe89af59ac0077f923d72dc3dfd
   JGProgressHUD: aa403e9a5b45cae98903c4600cccdd98c0c3ec90
+  Kingfisher: 8050bc6f7f68cbf3908bd04df7ccbac188f6d6d6
   PromisedFuture: 15ab3542f9d9c9d62886e2228c606a3e0fd16ccd
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
 
-PODFILE CHECKSUM: 374530de3e1a9d5bce68ca18ba5d203e4f7c9970
+PODFILE CHECKSUM: db6405cef319bb161786af74bdcecd8a2cc7c7e1
 
 COCOAPODS: 1.9.3

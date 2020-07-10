@@ -14,6 +14,8 @@
 		826DE18924B8913400DB5D45 /* NetworkConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826DE18524B8913400DB5D45 /* NetworkConstants.swift */; };
 		826DE18A24B8913400DB5D45 /* UserEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826DE18624B8913400DB5D45 /* UserEndpoint.swift */; };
 		826DE18C24B8913F00DB5D45 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826DE18B24B8913F00DB5D45 /* APIClient.swift */; };
+		826DE18E24B8D48200DB5D45 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826DE18D24B8D48200DB5D45 /* SearchResult.swift */; };
+		826DE19124B8E24400DB5D45 /* JSONDecoder+FirebaseDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 826DE19024B8E24400DB5D45 /* JSONDecoder+FirebaseDecoder.swift */; };
 		8279ED3D24B8677D007AF2BD /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8279ED3C24B8677D007AF2BD /* DetailViewController.swift */; };
 		8279ED4124B87CB8007AF2BD /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8279ED4024B87CB8007AF2BD /* SearchViewModel.swift */; };
 		8279ED4324B87CD9007AF2BD /* SearchResultCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8279ED4224B87CD9007AF2BD /* SearchResultCellViewModel.swift */; };
@@ -33,6 +35,8 @@
 		826DE18524B8913400DB5D45 /* NetworkConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkConstants.swift; sourceTree = "<group>"; };
 		826DE18624B8913400DB5D45 /* UserEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserEndpoint.swift; sourceTree = "<group>"; };
 		826DE18B24B8913F00DB5D45 /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		826DE18D24B8D48200DB5D45 /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
+		826DE19024B8E24400DB5D45 /* JSONDecoder+FirebaseDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+FirebaseDecoder.swift"; sourceTree = "<group>"; };
 		8279ED3C24B8677D007AF2BD /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		8279ED4024B87CB8007AF2BD /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		8279ED4224B87CD9007AF2BD /* SearchResultCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCellViewModel.swift; sourceTree = "<group>"; };
@@ -105,10 +109,19 @@
 			path = Router;
 			sourceTree = "<group>";
 		};
+		826DE18F24B8E22B00DB5D45 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				826DE19024B8E24400DB5D45 /* JSONDecoder+FirebaseDecoder.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		8279ED3624B862BF007AF2BD /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				8279ED4424B87D53007AF2BD /* Term.swift */,
+				826DE18D24B8D48200DB5D45 /* SearchResult.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -133,6 +146,7 @@
 		8279ED3924B862DC007AF2BD /* SupportFiles */ = {
 			isa = PBXGroup;
 			children = (
+				826DE18F24B8E22B00DB5D45 /* Extension */,
 				826DE18124B890E900DB5D45 /* Network */,
 				820C775624B8881900FB43BE /* Enums */,
 				82B4673324B8572D00DCCF2F /* AppDelegate.swift */,
@@ -328,6 +342,8 @@
 				820C775824B8883400FB43BE /* SearchType.swift in Sources */,
 				826DE18924B8913400DB5D45 /* NetworkConstants.swift in Sources */,
 				82B4673824B8572D00DCCF2F /* SearchViewController.swift in Sources */,
+				826DE18E24B8D48200DB5D45 /* SearchResult.swift in Sources */,
+				826DE19124B8E24400DB5D45 /* JSONDecoder+FirebaseDecoder.swift in Sources */,
 				826DE18824B8913400DB5D45 /* APIConfiguration.swift in Sources */,
 				826DE18C24B8913F00DB5D45 /* APIClient.swift in Sources */,
 				826DE18A24B8913400DB5D45 /* UserEndpoint.swift in Sources */,

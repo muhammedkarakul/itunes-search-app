@@ -2,7 +2,7 @@
 //  K.swift
 //  ListIt
 //
-//  Created by Mete Karakul on 19.06.2020.
+//  Created by Muhammed Karakul on 19.06.2020.
 //  Copyright © 2020 Muhammed KARAKUL. All rights reserved.
 //
 
@@ -17,6 +17,7 @@ struct NetworkConstants {
     
     struct APIParameterKey {
         static let term = "term"
+        static let limit = "limit"
     }
 }
 

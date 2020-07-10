@@ -1,8 +1,8 @@
 //
-//  SearchResult.swift
+//  Term.swift
 //  iTunes Search
 //
-//  Created by Mete Karakul on 10.07.2020.
+//  Created by Muhammed Karakul on 10.07.2020.
 //  Copyright © 2020 Muhammed Karakul. All rights reserved.
 //
 
@@ -12,13 +12,13 @@ struct Term: Codable {
     let artworkUrl100: URL
     let collectionPrice: Float
     let collectionName: String
-    let relaseDate: Date
+    let releaseDate: Date
     
     enum CodingKeys: String, CodingKey {
         case artworkUrl100
         case collectionPrice
         case collectionName
-        case relaseDate
+        case releaseDate
     }
     
     init(from decoder: Decoder) throws {
@@ -26,6 +26,6 @@ struct Term: Codable {
         artworkUrl100 = try values.decode(URL.self, forKey: CodingKeys.artworkUrl100)
         collectionPrice = try values.decode(Float.self, forKey: CodingKeys.collectionPrice)
         collectionName = try values.decode(String.self, forKey: CodingKeys.collectionName)
-        relaseDate = try values.decode(Date.self, forKey: CodingKeys.relaseDate)
+        releaseDate = try values.decode(Date.self, forKey: CodingKeys.releaseDate)
     }
 }

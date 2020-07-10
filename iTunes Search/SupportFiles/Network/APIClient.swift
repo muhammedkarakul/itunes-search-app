@@ -2,7 +2,7 @@
 //  APIClient.swift
 //  ListIt
 //
-//  Created by Mete Karakul on 19.06.2020.
+//  Created by Muhammed Karakul on 19.06.2020.
 //  Copyright © 2020 Muhammed KARAKUL. All rights reserved.
 //
 
@@ -13,9 +13,10 @@ import PromisedFuture
 class APIClient {
     
     @discardableResult
-    private static func performRequest<T:Decodable>(route:APIRouter, decoder: JSONDecoder = JSONDecoder()) -> Future<T, AFError> {
+    private static func performRequest<T:Decodable>(route:APIRouter, decoder: JSONDecoder = JSONDecoder.iTunesDecoder) -> Future<T, AFError> {
         return Future { completion in
             AF.request(route).responseDecodable(decoder: decoder, completionHandler: { (response: DataResponse<T, AFError>) in
+                debugPrint(response)
                 switch response.result {
                 case .success(let value):
                     completion(.success(value))
@@ -26,7 +27,7 @@ class APIClient {
         }
     }
     
-    static func search(withTerm term: String) -> Future<Term, AFError> {
-        return performRequest(route: APIRouter.search(term: term))
+    static func search(withTerm term: String, andLimit limit: Int) -> Future<SearchResult, AFError> {
+        return performRequest(route: APIRouter.search(term: term, limit: limit))
     }
 }

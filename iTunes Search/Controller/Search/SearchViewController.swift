@@ -2,11 +2,12 @@
 //  ViewController.swift
 //  iTunes Search
 //
-//  Created by Mete Karakul on 10.07.2020.
+//  Created by Muhammed Karakul on 10.07.2020.
 //  Copyright © 2020 Muhammed Karakul. All rights reserved.
 //
 
 import UIKit
+import JGProgressHUD
 
 final class SearchViewController: UIViewController {
 
@@ -21,9 +22,49 @@ final class SearchViewController: UIViewController {
         return searchController
     }()
     
+    private lazy var resultCollectionViewFlowLayout: UICollectionViewFlowLayout = {
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.sectionInset = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        flowLayout.minimumInteritemSpacing = 5.0
+        flowLayout.minimumLineSpacing = 5.0
+        flowLayout.itemSize = CGSize(width: (UIScreen.main.bounds.size.width - 24)/2, height: ((UIScreen.main.bounds.size.width - 24)/2))
+        return flowLayout
+    }()
+    
+    private lazy var noResultImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "no-result")
+        imageView.contentMode = .center
+        return imageView
+    }()
+    
+    private lazy var noResultLabel: UILabel = {
+        let label = UILabel()
+        label.text = "No results found!"
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var resultCollectionBackgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        return view
+    }()
+    
     private lazy var resultCollectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
+        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: resultCollectionViewFlowLayout)
+        if #available(iOS 13.0, *) {
+            collectionView.backgroundColor = .systemBackground
+        } else {
+            collectionView.backgroundColor = .white
+        }
+        collectionView.backgroundView = resultCollectionBackgroundView
         return collectionView
+    }()
+    
+    private lazy var progressHud: JGProgressHUD = {
+        let hud = JGProgressHUD(style: .dark)
+        return hud
     }()
     
     override func viewDidLoad() {
@@ -35,6 +76,9 @@ final class SearchViewController: UIViewController {
     }
     
     private func linkInteractor() {
+        resultCollectionView.delegate = self
+        resultCollectionView.dataSource = self
+        
         searchController.searchBar.delegate = self
         searchController.searchResultsUpdater = self
     }
@@ -52,6 +96,8 @@ final class SearchViewController: UIViewController {
     
     func prepareLayout() {
         setupResultCollectionViewLayout()
+        setupNoResultImageViewLayout()
+        setupNoResultLabelLayout()
     }
     
     private func setupResultCollectionViewLayout() {
@@ -61,6 +107,22 @@ final class SearchViewController: UIViewController {
             maker.top.equalToSuperview()
             maker.trailing.equalToSuperview()
             maker.bottom.equalToSuperview()
+        }
+    }
+    
+    private func setupNoResultImageViewLayout() {
+        resultCollectionBackgroundView.addSubview(noResultImageView)
+        noResultImageView.snp.makeConstraints { maker in
+            maker.center.equalToSuperview()
+        }
+    }
+    
+    private func setupNoResultLabelLayout() {
+        resultCollectionBackgroundView.addSubview(noResultLabel)
+        noResultLabel.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview()
+            maker.top.equalTo(noResultImageView.snp.bottom).offset(16.0)
+            maker.trailing.equalToSuperview()
         }
     }
 }
@@ -76,12 +138,14 @@ extension SearchViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        searchViewModel.numberOfItemsInSection
+        searchViewModel.numberOfItems
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "searchResultCell", for: indexPath) as! SearchResultCell
-        return cell
+        let searchResultCell = collectionView.dequeueReusableCell(withReuseIdentifier: "searchResultCell", for: indexPath) as! SearchResultCell
+        let searchResultCellViewModel = searchViewModel.viewModelForCell(at: indexPath.row)
+        searchResultCellViewModel.configure(searchResultCell)
+        return searchResultCell
     }
 }
 
@@ -106,6 +170,17 @@ extension SearchViewController: UISearchBarDelegate {
 extension SearchViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchText = searchController.searchBar.text else { return }
-        debugPrint(searchText)
+        if searchText.count > 2 {
+            progressHud.show(in: self.view)
+            searchViewModel.search(withText: searchText, andLimit: 20) { error in
+                self.progressHud.dismiss()
+                if let error = error {
+                    debugPrint(error)
+                } else {
+                    self.resultCollectionView.backgroundView?.isHidden = self.searchViewModel.numberOfItems > 0
+                    self.resultCollectionView.reloadData()
+                }
+            }
+        }
     }
 }

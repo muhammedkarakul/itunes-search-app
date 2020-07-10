@@ -2,7 +2,7 @@
 //  APIRouter.swift
 //  ListIt
 //
-//  Created by Mete Karakul on 19.06.2020.
+//  Created by Muhammed Karakul on 19.06.2020.
 //  Copyright © 2020 Muhammed KARAKUL. All rights reserved.
 //
 
@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 
 enum APIRouter: URLRequestConvertible {
-    case search(term: String)
+    case search(term: String, limit: Int)
     
     // MARK: - HTTPMethod
     private var method: HTTPMethod {
@@ -31,8 +31,8 @@ enum APIRouter: URLRequestConvertible {
     // MARK: - Parameters
     private var parameters: Parameters? {
         switch self {
-        case .search(let term):
-            return [NetworkConstants.APIParameterKey.term : term]
+        case .search(let term, let limit):
+            return [NetworkConstants.APIParameterKey.term : term, NetworkConstants.APIParameterKey.limit : limit]
         }
     }
     

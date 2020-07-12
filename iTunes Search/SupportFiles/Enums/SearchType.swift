@@ -9,8 +9,8 @@
 import Foundation
 
 enum SearchType: String, CaseIterable {
-    case movie = "Movie"
+    case movies = "Movies"
     case music = "Music"
-    case software = "Apps"
-    case book = "Books"
+    case apps = "Apps"
+    case books = "Books"
 }

@@ -6,12 +6,10 @@
 //  Copyright © 2020 Muhammed Karakul. All rights reserved.
 //
 
-import Foundation
-import Alamofire
-import PromisedFuture
+import UIKit
 
 final class SearchViewModel {
-    var searchType: SearchType = .movie {
+    var searchType: SearchType = .movies {
         didSet {
             searchables = []
         }
@@ -37,7 +35,7 @@ final class SearchViewModel {
     
     func search(withTerm term: String, completion: @escaping (Error?) -> Void) {
         switch searchType {
-        case .movie:
+        case .movies:
             APIClient.searchMovie(withTerm: term).execute(onSuccess: { searchResult in
                 self.searchables = searchResult.results
                 completion(nil)
@@ -51,14 +49,14 @@ final class SearchViewModel {
             }) { error in
                 completion(error)
             }
-        case .software:
+        case .apps:
             APIClient.searchApp(withTerm: term).execute(onSuccess: { searchResult in
                 self.searchables = searchResult.results
                 completion(nil)
             }) { error in
                 completion(error)
             }
-        case .book:
+        case .books:
             APIClient.searchBook(withTerm: term).execute(onSuccess: { searchResult in
                 self.searchables = searchResult.results
                 completion(nil)

@@ -93,6 +93,11 @@ final class SearchViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     
+    private func updateView() {
+        self.resultCollectionView.backgroundView?.isHidden = self.searchViewModel.numberOfItems > 0
+        self.resultCollectionView.reloadData()
+    }
+    
     private func prepareLayout() {
         setupResultCollectionViewLayout()
         setupNoResultImageViewLayout()
@@ -158,16 +163,21 @@ extension SearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         switch selectedScope {
         case 0:
-            searchViewModel.searchType = .movie
+            searchViewModel.searchType = .movies
         case 1:
             searchViewModel.searchType = .music
         case 2:
-            searchViewModel.searchType = .software
+            searchViewModel.searchType = .apps
         case 3:
-            searchViewModel.searchType = .book
+            searchViewModel.searchType = .books
         default:
             break
         }
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchViewModel.searchables = []
+        updateView()
     }
 }
 
@@ -181,9 +191,9 @@ extension SearchViewController: UISearchResultsUpdating {
                 self.progressHud.dismiss()
                 if let error = error {
                     debugPrint(error)
+                } else {
+                    self.updateView()
                 }
-                self.resultCollectionView.backgroundView?.isHidden = self.searchViewModel.numberOfItems > 0
-                self.resultCollectionView.reloadData()
             }
         }
     }

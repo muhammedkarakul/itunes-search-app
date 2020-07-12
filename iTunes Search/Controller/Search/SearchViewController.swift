@@ -174,7 +174,7 @@ extension SearchViewController: UISearchBarDelegate {
 // MARK: - UISearchResultsUpdating
 extension SearchViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        guard let term = searchController.searchBar.text else { return }
+        guard let term = searchController.searchBar.text?.replacingOccurrences(of: " ", with: "+").lowercased() else { return }
         if term.count > 2 {
             progressHud.show(in: self.view)
             searchViewModel.search(withTerm: term) { error in

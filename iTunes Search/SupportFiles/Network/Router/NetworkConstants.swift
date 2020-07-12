@@ -19,6 +19,7 @@ struct NetworkConstants {
         static let term = "term"
         static let media = "media"
         static let entity = "entity"
+        static let limit = "limit"
     }
 }
 

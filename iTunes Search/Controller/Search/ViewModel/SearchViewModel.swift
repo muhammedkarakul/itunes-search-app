@@ -7,34 +7,64 @@
 //
 
 import Foundation
+import Alamofire
+import PromisedFuture
 
 final class SearchViewModel {
     var searchType: SearchType = .movie {
         didSet {
-            searchResult = SearchResult()
+            searchables = []
         }
     }
     
-    var searchResult = SearchResult()
+    var searchables = [Searchable]()
     
     var numberOfSections: Int {
         1
     }
     
     var numberOfItems: Int {
-        searchResult.results.count
+        searchables.count
     }
     
     func viewModelForCell(at index: Int) -> SearchResultCellViewModel {
-        return SearchResultCellViewModel(term: searchResult.results[index])
+        SearchResultCellViewModel(searchable: searchables[index])
     }
     
-    func search(withText text: String, andMedia media: String, andLimit limit: Int, completion: @escaping (Error?) -> Void) {
-        APIClient.search(withTerm: text, andMedia: media, andLimit: limit).execute(onSuccess: { searchResult in
-            self.searchResult = searchResult
-            completion(nil)
-        }) { error in
-            completion(error)
+    func viewModelForDetail(at index: Int, andArtworkImage image: UIImage?) -> DetailViewModel {
+        return DetailViewModel(sections: searchables[index].detail, artworkImage: image, title: searchables[index].collectionName)
+    }
+    
+    func search(withTerm term: String, completion: @escaping (Error?) -> Void) {
+        switch searchType {
+        case .movie:
+            APIClient.searchMovie(withTerm: term).execute(onSuccess: { searchResult in
+                self.searchables = searchResult.results
+                completion(nil)
+            }) { error in
+                completion(error)
+            }
+        case .music:
+            APIClient.searchMusic(withTerm: term).execute(onSuccess: { searchResult in
+                self.searchables = searchResult.results
+                completion(nil)
+            }) { error in
+                completion(error)
+            }
+        case .software:
+            APIClient.searchApp(withTerm: term).execute(onSuccess: { searchResult in
+                self.searchables = searchResult.results
+                completion(nil)
+            }) { error in
+                completion(error)
+            }
+        case .book:
+            APIClient.searchBook(withTerm: term).execute(onSuccess: { searchResult in
+                self.searchables = searchResult.results
+                completion(nil)
+            }) { error in
+                completion(error)
+            }
         }
     }
 }

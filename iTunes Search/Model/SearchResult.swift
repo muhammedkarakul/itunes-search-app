@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct SearchResult: Codable {
+struct SearchResult<T:Codable>: Decodable {
     let resultCount: Int
-    let results: [Term]
+    let results: [T]
     
     enum CodingKeys: String, CodingKey {
         case resultCount
@@ -20,11 +20,11 @@ struct SearchResult: Codable {
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         resultCount = try values.decode(Int.self, forKey: CodingKeys.resultCount)
-        results = try values.decode([Term].self, forKey: CodingKeys.results)
+        results = try values.decode([T].self, forKey: CodingKeys.results)
     }
     
-    init() {
-        resultCount = 0
-        results = []
+    init(resultCount: Int = 0, results: [T] = []) {
+        self.resultCount = resultCount
+        self.results = results
     }
 }

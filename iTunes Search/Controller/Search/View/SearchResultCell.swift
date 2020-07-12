@@ -29,19 +29,12 @@ final class SearchResultCell: UICollectionViewCell {
     
     var relaseDate: Date? {
         get {
-            return relaseDateFormatter.date(from: relaseDateLabel.text ?? "")
+            return DateFormatter().date(from: relaseDateLabel.text ?? "")
         }
         set {
-            relaseDateLabel.text = relaseDateFormatter.string(from: newValue ?? Date())
+            relaseDateLabel.text = newValue?.formattedDateString
         }
     }
-    
-    private lazy var relaseDateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        dateFormatter.dateFormat = "dd MMM yyyy"
-        return dateFormatter
-    }()
     
     private(set) lazy var artworkImageView: UIImageView = {
         let imageView = UIImageView()

@@ -10,7 +10,6 @@ import UIKit
 import JGProgressHUD
 
 final class SearchViewController: UIViewController {
-
     private let searchViewModel = SearchViewModel()
     
     private lazy var searchController: UISearchController = {
@@ -83,18 +82,18 @@ final class SearchViewController: UIViewController {
         searchController.searchResultsUpdater = self
     }
     
-    func registerCells() {
+    private func registerCells() {
         resultCollectionView.register(SearchResultCell.self, forCellWithReuseIdentifier: "searchResultCell")
     }
     
-    func configureApperance() {
+    private func configureApperance() {
         title = "Search"
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = true
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     
-    func prepareLayout() {
+    private func prepareLayout() {
         setupResultCollectionViewLayout()
         setupNoResultImageViewLayout()
         setupNoResultLabelLayout()
@@ -129,6 +128,12 @@ final class SearchViewController: UIViewController {
 
 // MARK: - UICollectionViewDelegate
 extension SearchViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let detailViewController = DetailViewController()
+        let selectedCell = collectionView.cellForItem(at: indexPath) as? SearchResultCell
+        detailViewController.detailViewModel = searchViewModel.viewModelForDetail(at: indexPath.row, andArtworkImage: selectedCell?.artworkImageView.image)
+        navigationController?.pushViewController(detailViewController, animated: true)
+    }
 }
 
 // MARK - UICollectionViewDataSource
@@ -159,7 +164,7 @@ extension SearchViewController: UISearchBarDelegate {
         case 2:
             searchViewModel.searchType = .software
         case 3:
-            searchViewModel.searchType = .ebook
+            searchViewModel.searchType = .book
         default:
             break
         }
@@ -169,10 +174,10 @@ extension SearchViewController: UISearchBarDelegate {
 // MARK: - UISearchResultsUpdating
 extension SearchViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        guard let searchText = searchController.searchBar.text else { return }
-        if searchText.count > 2 {
+        guard let term = searchController.searchBar.text else { return }
+        if term.count > 2 {
             progressHud.show(in: self.view)
-            searchViewModel.search(withText: searchText, andMedia: searchViewModel.searchType.rawValue.lowercased(), andLimit: 20) { error in
+            searchViewModel.search(withTerm: term) { error in
                 self.progressHud.dismiss()
                 if let error = error {
                     debugPrint(error)

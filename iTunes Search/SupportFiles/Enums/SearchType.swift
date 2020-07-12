@@ -11,6 +11,6 @@ import Foundation
 enum SearchType: String, CaseIterable {
     case movie = "Movie"
     case music = "Music"
-    case software = "Software"
-    case ebook = "EBook"
+    case software = "Apps"
+    case book = "Books"
 }

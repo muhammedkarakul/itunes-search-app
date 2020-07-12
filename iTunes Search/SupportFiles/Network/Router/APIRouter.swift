@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 
 enum APIRouter: URLRequestConvertible {
-    case search(term: String, media: String, limit: Int)
+    case search(term: String, media: String, entity: String)
     
     // MARK: - HTTPMethod
     private var method: HTTPMethod {
@@ -31,8 +31,8 @@ enum APIRouter: URLRequestConvertible {
     // MARK: - Parameters
     private var parameters: Parameters? {
         switch self {
-        case .search(let term, let media, let limit):
-            return [NetworkConstants.APIParameterKey.term : term, NetworkConstants.APIParameterKey.media : media, NetworkConstants.APIParameterKey.limit : limit]
+        case .search(let term, let media, let entity):
+            return [NetworkConstants.APIParameterKey.term : term, NetworkConstants.APIParameterKey.media : media, NetworkConstants.APIParameterKey.entity : entity]
         }
     }
     

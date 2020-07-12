@@ -16,7 +16,6 @@ class APIClient {
     private static func performRequest<T:Decodable>(route:APIRouter, decoder: JSONDecoder = JSONDecoder.iTunesDecoder) -> Future<T, AFError> {
         return Future { completion in
             AF.request(route).responseDecodable(decoder: decoder, completionHandler: { (response: DataResponse<T, AFError>) in
-                debugPrint(response)
                 switch response.result {
                 case .success(let value):
                     completion(.success(value))
@@ -27,7 +26,23 @@ class APIClient {
         }
     }
     
-    static func search(withTerm term: String, andMedia media: String, andLimit limit: Int) -> Future<SearchResult, AFError> {
-        return performRequest(route: APIRouter.search(term: term, media: media, limit: limit))
+    private static func search<T:Codable>(withTerm term: String, andMedia media: String, andEntity entity: String) -> Future<SearchResult<T>, AFError> {
+        return performRequest(route: APIRouter.search(term: term, media: media, entity: entity))
+    }
+    
+    static func searchMovie(withTerm term: String) -> Future<SearchResult<Movie>, AFError> {
+        search(withTerm: term, andMedia: "movie", andEntity: "movie")
+    }
+    
+    static func searchMusic(withTerm term: String) -> Future<SearchResult<Music>, AFError> {
+        search(withTerm: term, andMedia: "music", andEntity: "album")
+    }
+    
+    static func searchApp(withTerm term: String) -> Future<SearchResult<Software>, AFError> {
+        search(withTerm: term, andMedia: "software", andEntity: "software")
+    }
+    
+    static func searchBook(withTerm term: String) -> Future<SearchResult<Book>, AFError> {
+        search(withTerm: term, andMedia: "ebook", andEntity: "ebook")
     }
 }

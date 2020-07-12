@@ -10,16 +10,16 @@ import Foundation
 import Kingfisher
 
 final class SearchResultCellViewModel {
-    let term: Term
+    let searchable: Searchable
     
-    init(term: Term) {
-        self.term = term
+    init(searchable: Searchable) {
+        self.searchable = searchable
     }
     
     func configure(_ cell: SearchResultCell) {
-        cell.artworkImageView.kf.setImage(with: term.artworkUrl100)
-        cell.name = term.trackName
-        cell.price = term.trackPrice
-        cell.relaseDate = term.releaseDate
+        cell.artworkImageView.kf.setImage(with: searchable.artworkUrl100)
+        cell.name = searchable.collectionName
+        cell.price = searchable.collectionPrice
+        cell.relaseDate = searchable.releaseDate
     }
 }
